@@ -72,8 +72,14 @@ public class ActivityView {
             return;
 
         String newTitle = InputUtil.input("Judul Baru (Kosongkan jika tidak ingin mengubah)");
+        if (newTitle.equalsIgnoreCase("x"))
+            return;
         String newDay = InputUtil.input("Hari Baru (Kosongkan jika tidak ingin mengubah)");
+        if (newDay.equalsIgnoreCase("x"))
+            return;
         String newTime = InputUtil.input("Waktu Baru (Kosongkan jika tidak ingin mengubah)");
+        if (newTime.equalsIgnoreCase("x"))
+            return;
 
         String title = newTitle.isBlank() ? null : newTitle;
         String day = newDay.isBlank() ? null : newDay;

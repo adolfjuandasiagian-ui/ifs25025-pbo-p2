@@ -66,8 +66,11 @@ public class ContactView {
         if (id == null) return;
         
         String newName = InputUtil.input("Nama Baru (Kosongkan jika tidak ingin mengubah)");
+        if (newName.equalsIgnoreCase("x")) return;
         String newPhone = InputUtil.input("Telepon Baru (Kosongkan jika tidak ingin mengubah)");
+        if (newPhone.equalsIgnoreCase("x")) return;
         String newEmail = InputUtil.input("Email Baru (Kosongkan jika tidak ingin mengubah)");
+        if (newEmail.equalsIgnoreCase("x")) return;
         
         String name = newName.isBlank() ? null : newName;
         String phone = newPhone.isBlank() ? null : newPhone;

@@ -34,5 +34,11 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public void update(Activity activity) {
+        for (int index = 0; index < data.size(); index++) {
+            if (data.get(index).getId() == activity.getId()) {
+                data.set(index, activity);
+                return;
+            }
+        }
     }
 }

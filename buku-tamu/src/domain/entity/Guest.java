@@ -1,7 +1,7 @@
 package domain.entity;
 
 public class Guest {
-    private Integer id;
+    private final int id;
     private String name;
     private String purpose;
 
@@ -11,12 +11,8 @@ public class Guest {
         this.purpose = purpose;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

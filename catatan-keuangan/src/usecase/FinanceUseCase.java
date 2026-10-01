@@ -9,42 +9,45 @@ import java.util.List;
 
 public class FinanceUseCase {
     private final ITransactionRepository repository;
-    private int nextId = 1;
 
     public FinanceUseCase(ITransactionRepository repository) {
         this.repository = repository;
     }
 
     public void addTransaction(String description, double amount, TransactionType type) {
-        Transaction transaction = new Transaction(nextId++, description, amount, type);
-        repository.addTransaction(transaction);
+        repository.save(description, amount, type);
     }
 
     public List<Transaction> getAllTransactions() {
-        return repository.getAllTransactions();
+        return repository.findAll();
     }
 
     public boolean deleteTransaction(int id) {
-        return repository.deleteTransaction(id);
+        return repository.deleteById(id);
     }
 
     public List<Transaction> searchTransactions(String query) {
-        return repository.searchTransactions(query);
+        String lowerQuery = query.toLowerCase();
+        return repository.findAll().stream()
+                .filter(transaction -> transaction.getDescription().toLowerCase().contains(lowerQuery))
+                .toList();
     }
 
     public List<Transaction> getSortedTransactions(SortOption sortOption) {
-        return repository.getSortedTransactions(sortOption);
+        return repository.findAll().stream()
+                .sorted(sortOption.comparator())
+                .toList();
     }
 
     public double getTotalIncome() {
-        return repository.getAllTransactions().stream()
+        return repository.findAll().stream()
                 .filter(t -> t.getType() == TransactionType.PEMASUKAN)
                 .mapToDouble(Transaction::getAmount)
                 .sum();
     }
 
     public double getTotalExpense() {
-        return repository.getAllTransactions().stream()
+        return repository.findAll().stream()
                 .filter(t -> t.getType() == TransactionType.PENGELUARAN)
                 .mapToDouble(Transaction::getAmount)
                 .sum();

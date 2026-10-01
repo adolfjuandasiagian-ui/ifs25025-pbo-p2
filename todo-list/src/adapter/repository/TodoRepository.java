@@ -34,9 +34,9 @@ public class TodoRepository implements ITodoRepository {
 
     @Override
     public void update(Todo todo) {
-        for (int i = 0; i < todos.size(); i++) {
-            if (todos.get(i).getId() == todo.getId()) {
-                todos.set(i, todo);
+        for (int index = 0; index < todos.size(); index++) {
+            if (todos.get(index).getId() == todo.getId()) {
+                todos.set(index, todo);
                 return;
             }
         }

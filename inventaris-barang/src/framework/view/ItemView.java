@@ -78,6 +78,8 @@ public class ItemView {
             return;
 
         String strQuantity = InputUtil.input("Jumlah Baru (Kosongkan jika tidak ingin mengubah)");
+        if (strQuantity.equalsIgnoreCase("x"))
+            return;
         Integer quantity = null;
         if (!strQuantity.isBlank()) {
             quantity = parseQuantity(strQuantity);
