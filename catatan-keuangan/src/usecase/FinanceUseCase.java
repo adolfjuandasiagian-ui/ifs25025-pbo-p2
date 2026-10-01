@@ -16,6 +16,9 @@ public class FinanceUseCase {
     }
 
     public Transaction addTransaction(String description, double amount, TransactionType type) {
+        if (!Double.isFinite(amount) || amount <= 0) {
+            throw new IllegalArgumentException("Amount must be finite and positive");
+        }
         return repository.save(description, amount, type);
     }
 

@@ -74,13 +74,9 @@ public class FinanceView {
 
         try {
             double amount = Double.parseDouble(amountStr);
-            if (!Double.isFinite(amount) || amount <= 0) {
-                presenter.showError("[!] Jumlah tidak valid!");
-                return;
-            }
             presenter.showAddSuccess(useCase.addTransaction(desc, amount, type));
 
-        } catch (NumberFormatException e) {
+        } catch (IllegalArgumentException e) {
             presenter.showError("[!] Jumlah tidak valid!");
         }
     }

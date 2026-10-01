@@ -20,14 +20,17 @@ public class TodoView {
             presenter.showTodos(useCase.getAllTodos());
             presenter.showMenu();
             String input = InputUtil.input("Pilih");
-            switch (input) {
-                case "1" -> addTodo();
-                case "2" -> updateTodo();
-                case "3" -> searchTodo();
-                case "4" -> sortTodo();
-                case "5" -> removeTodo();
-                case "x" -> running = false;
-                default -> presenter.showInvalidChoice();
+            if (input.equalsIgnoreCase("x")) {
+                running = false;
+            } else {
+                switch (input) {
+                    case "1" -> addTodo();
+                    case "2" -> updateTodo();
+                    case "3" -> searchTodo();
+                    case "4" -> sortTodo();
+                    case "5" -> removeTodo();
+                    default -> presenter.showInvalidChoice();
+                }
             }
             if (running)
                 presenter.showBlankLine();

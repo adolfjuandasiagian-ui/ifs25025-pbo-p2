@@ -2,6 +2,7 @@ package domain.entity;
 
 import java.util.Comparator;
 
+/** Domain-owned comparators keep sorting rules out of the view and use case. */
 public enum SortOption {
     AMOUNT_ASC(Comparator.comparingDouble(Transaction::getAmount)),
     AMOUNT_DESC(Comparator.comparingDouble(Transaction::getAmount).reversed()),

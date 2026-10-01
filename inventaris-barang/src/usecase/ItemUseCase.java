@@ -19,6 +19,9 @@ public class ItemUseCase {
     }
 
     public Item addItem(String name, int quantity, String category) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
         return repository.save(name, quantity, category);
     }
 
@@ -27,6 +30,9 @@ public class ItemUseCase {
     }
 
     public boolean updateItem(int id, Integer quantity) {
+        if (quantity != null && quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
         Optional<Item> found = repository.findById(id);
         if (found.isEmpty()) {
             return false;

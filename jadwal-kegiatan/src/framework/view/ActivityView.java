@@ -20,14 +20,17 @@ public class ActivityView {
             presenter.showActivities(useCase.getAllActivities());
             presenter.showMenu();
             String input = InputUtil.input("Pilih");
-            switch (input) {
-                case "1" -> addActivity();
-                case "2" -> updateActivity();
-                case "3" -> searchActivity();
-                case "4" -> sortActivity();
-                case "5" -> removeActivity();
-                case "x" -> running = false;
-                default -> presenter.showInvalidChoice();
+            if (input.equalsIgnoreCase("x")) {
+                running = false;
+            } else {
+                switch (input) {
+                    case "1" -> addActivity();
+                    case "2" -> updateActivity();
+                    case "3" -> searchActivity();
+                    case "4" -> sortActivity();
+                    case "5" -> removeActivity();
+                    default -> presenter.showInvalidChoice();
+                }
             }
             if (running)
                 presenter.showBlankLine();

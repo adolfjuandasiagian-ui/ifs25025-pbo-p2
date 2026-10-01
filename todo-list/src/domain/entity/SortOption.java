@@ -2,6 +2,7 @@ package domain.entity;
 
 import java.util.Comparator;
 
+/** Domain-owned comparators keep sorting rules out of the view and use case. */
 public enum SortOption {
     TITLE_ASC(Comparator.comparing(Todo::getTitle, String.CASE_INSENSITIVE_ORDER)),
     TITLE_DESC(Comparator.comparing(Todo::getTitle, String.CASE_INSENSITIVE_ORDER).reversed()),

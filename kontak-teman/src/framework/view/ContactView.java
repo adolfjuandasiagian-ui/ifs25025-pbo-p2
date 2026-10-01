@@ -20,14 +20,17 @@ public class ContactView {
             presenter.showContacts(useCase.getAllContacts());
             presenter.showMenu();
             String input = InputUtil.input("Pilih");
-            switch (input) {
-                case "1" -> addContact();
-                case "2" -> updateContact();
-                case "3" -> searchContact();
-                case "4" -> sortContact();
-                case "5" -> removeContact();
-                case "x" -> running = false;
-                default -> presenter.showInvalidChoice();
+            if (input.equalsIgnoreCase("x")) {
+                running = false;
+            } else {
+                switch (input) {
+                    case "1" -> addContact();
+                    case "2" -> updateContact();
+                    case "3" -> searchContact();
+                    case "4" -> sortContact();
+                    case "5" -> removeContact();
+                    default -> presenter.showInvalidChoice();
+                }
             }
             if (running) presenter.showBlankLine();
         }

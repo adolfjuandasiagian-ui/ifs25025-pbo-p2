@@ -20,14 +20,17 @@ public class ItemView {
             presenter.showItems(useCase.getAllItems());
             presenter.showMenu();
             String input = InputUtil.input("Pilih");
-            switch (input) {
-                case "1" -> addItem();
-                case "2" -> updateItem();
-                case "3" -> searchItem();
-                case "4" -> sortItem();
-                case "5" -> removeItem();
-                case "x" -> running = false;
-                default -> presenter.showInvalidChoice();
+            if (input.equalsIgnoreCase("x")) {
+                running = false;
+            } else {
+                switch (input) {
+                    case "1" -> addItem();
+                    case "2" -> updateItem();
+                    case "3" -> searchItem();
+                    case "4" -> sortItem();
+                    case "5" -> removeItem();
+                    default -> presenter.showInvalidChoice();
+                }
             }
             if (running)
                 presenter.showBlankLine();
@@ -49,7 +52,7 @@ public class ItemView {
             return;
 
         Integer quantity = parseQuantity(strQuantity);
-        if (quantity == null || quantity <= 0) {
+        if (quantity == null) {
             presenter.showInvalidQuantity();
             return;
         }
@@ -62,7 +65,11 @@ public class ItemView {
             return;
         }
 
-        presenter.showAddSuccess(useCase.addItem(name, quantity, category));
+        try {
+            presenter.showAddSuccess(useCase.addItem(name, quantity, category));
+        } catch (IllegalArgumentException e) {
+            presenter.showInvalidQuantity();
+        }
     }
 
     private void updateItem() {
@@ -81,16 +88,20 @@ public class ItemView {
         Integer quantity = null;
         if (!strQuantity.isBlank()) {
             quantity = parseQuantity(strQuantity);
-            if (quantity == null || quantity <= 0) {
+            if (quantity == null) {
                 presenter.showInvalidQuantity();
                 return;
             }
         }
 
-        if (useCase.updateItem(id, quantity)) {
-            presenter.showUpdateSuccess();
-        } else {
-            presenter.showUpdateFailed(id);
+        try {
+            if (useCase.updateItem(id, quantity)) {
+                presenter.showUpdateSuccess();
+            } else {
+                presenter.showUpdateFailed(id);
+            }
+        } catch (IllegalArgumentException e) {
+            presenter.showInvalidQuantity();
         }
     }
 

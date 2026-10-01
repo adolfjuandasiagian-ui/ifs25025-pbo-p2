@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+/** Domain-owned comparators keep sorting rules out of the view and use case. */
 public enum SortOption {
     DAY(Comparator.comparing((Activity activity) -> getDayIndex(activity.getDay()))
             .thenComparing(Activity::getTime, String.CASE_INSENSITIVE_ORDER)),
