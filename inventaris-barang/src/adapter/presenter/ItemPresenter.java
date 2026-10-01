@@ -10,7 +10,7 @@ public class ItemPresenter {
 
     private void printList(List<Item> list, String header, String emptyMessage) {
         System.out.println(header);
-        if (list.isEmpty()) {
+        if (list == null || list.isEmpty()) {
             System.out.println(emptyMessage);
         } else {
             for (Item item : list) {

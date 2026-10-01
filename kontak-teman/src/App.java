@@ -1,6 +1,7 @@
 import adapter.presenter.ContactPresenter;
 import adapter.repository.ContactRepository;
 import domain.repository.IContactRepository;
+import framework.util.InputUtil;
 import framework.view.ContactView;
 import usecase.ContactUseCase;
 
@@ -16,6 +17,10 @@ public class App {
         ContactPresenter contactPresenter = new ContactPresenter();
         ContactView contactView = new ContactView(contactUseCase, contactPresenter);
 
-        contactView.show();
+        try {
+            contactView.show();
+        } catch (InputUtil.EndOfInputException ignored) {
+            return;
+        }
     }
 }

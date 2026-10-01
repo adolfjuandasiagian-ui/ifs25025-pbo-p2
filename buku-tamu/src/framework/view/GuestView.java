@@ -5,6 +5,7 @@ import adapter.presenter.GuestPresenter;
 import framework.util.InputUtil;
 import usecase.GuestUseCase;
 import java.util.List;
+import java.util.OptionalInt;
 
 public class GuestView {
     private final GuestUseCase guestUseCase;
@@ -70,11 +71,12 @@ public class GuestView {
                     continue;
                 }
 
-                try {
-                    int id = Integer.parseInt(idInput);
+                OptionalInt parsedId = InputUtil.parseInteger(idInput);
+                if (parsedId.isPresent()) {
+                    int id = parsedId.getAsInt();
                     boolean isDeleted = guestUseCase.deleteGuest(id);
                     guestPresenter.showDeleteResult(isDeleted, id);
-                } catch (NumberFormatException e) {
+                } else {
                     guestPresenter.showInvalidId();
                 }
                 guestPresenter.showBlankLine();

@@ -4,6 +4,7 @@ import domain.entity.Transaction;
 import domain.entity.TransactionType;
 import domain.repository.ITransactionRepository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
@@ -13,7 +14,7 @@ public class TransactionRepository implements ITransactionRepository {
     private int idCounter = 0;
 
     @Override
-    public Transaction save(String description, double amount, TransactionType type) {
+    public Transaction save(String description, BigDecimal amount, TransactionType type) {
         Transaction transaction = new Transaction(++idCounter, description, amount, type);
         transactions.add(transaction);
         return transaction;

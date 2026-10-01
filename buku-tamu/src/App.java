@@ -1,6 +1,7 @@
 import adapter.presenter.GuestPresenter;
 import adapter.repository.GuestRepository;
 import domain.repository.IGuestRepository;
+import framework.util.InputUtil;
 import framework.view.GuestView;
 import usecase.GuestUseCase;
 
@@ -24,6 +25,10 @@ public class App {
         GuestView guestView = new GuestView(guestUseCase, guestPresenter);
 
         // Menjalankan loop menu utama aplikasi
-        guestView.show();
+        try {
+            guestView.show();
+        } catch (InputUtil.EndOfInputException ignored) {
+            return;
+        }
     }
 }

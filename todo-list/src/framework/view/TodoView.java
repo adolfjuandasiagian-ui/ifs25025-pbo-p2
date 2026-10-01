@@ -4,6 +4,7 @@ import adapter.presenter.TodoPresenter;
 import domain.entity.SortOption;
 import framework.util.InputUtil;
 import usecase.TodoUseCase;
+import java.util.OptionalInt;
 
 public class TodoView {
     private final TodoUseCase useCase;
@@ -122,12 +123,12 @@ public class TodoView {
     }
 
     private Integer parseId(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        OptionalInt parsed = InputUtil.parseInteger(value);
+        if (parsed.isEmpty()) {
             presenter.showInvalidId();
             return null;
         }
+        return parsed.getAsInt();
     }
 
     private SortOption mapSortOption(String input) {

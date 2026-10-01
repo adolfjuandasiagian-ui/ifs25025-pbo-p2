@@ -1,6 +1,7 @@
 import adapter.presenter.ActivityPresenter;
 import adapter.repository.ActivityRepository;
 import domain.repository.IActivityRepository;
+import framework.util.InputUtil;
 import framework.view.ActivityView;
 import usecase.ActivityUseCase;
 
@@ -16,6 +17,10 @@ public class App {
         ActivityPresenter activityPresenter = new ActivityPresenter();
         ActivityView activityView = new ActivityView(activityUseCase, activityPresenter);
 
-        activityView.show();
+        try {
+            activityView.show();
+        } catch (InputUtil.EndOfInputException ignored) {
+            return;
+        }
     }
 }

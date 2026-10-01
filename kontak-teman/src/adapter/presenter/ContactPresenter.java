@@ -10,7 +10,7 @@ public class ContactPresenter {
 
     private void printList(List<Contact> list, String header, String emptyMessage) {
         System.out.println(header);
-        if (list.isEmpty()) {
+        if (list == null || list.isEmpty()) {
             System.out.println(emptyMessage);
         } else {
             for (Contact contact : list) {

@@ -5,6 +5,8 @@ import domain.entity.SortOption;
 import domain.entity.TransactionType;
 import framework.util.InputUtil;
 import usecase.FinanceUseCase;
+import java.math.BigDecimal;
+import java.util.OptionalInt;
 
 public class FinanceView {
     private final FinanceUseCase useCase;
@@ -73,7 +75,7 @@ public class FinanceView {
         if (amountStr.equalsIgnoreCase("x")) return;
 
         try {
-            double amount = Double.parseDouble(amountStr);
+            BigDecimal amount = new BigDecimal(amountStr);
             presenter.showAddSuccess(useCase.addTransaction(desc, amount, type));
 
         } catch (IllegalArgumentException e) {
@@ -112,14 +114,15 @@ public class FinanceView {
         String idStr = InputUtil.input("ID Transaksi (x Jika Batal)");
         if (idStr.equalsIgnoreCase("x")) return;
 
-        try {
-            int id = Integer.parseInt(idStr);
+        OptionalInt parsedId = InputUtil.parseInteger(idStr);
+        if (parsedId.isPresent()) {
+            int id = parsedId.getAsInt();
             if (useCase.deleteTransaction(id)) {
                 presenter.showMessage("Berhasil menghapus transaksi.");
             } else {
                 presenter.showError("[!] Gagal menghapus transaksi dengan ID: " + id + ".");
             }
-        } catch (NumberFormatException e) {
+        } else {
             presenter.showError("[!] ID tidak valid!");
         }
     }

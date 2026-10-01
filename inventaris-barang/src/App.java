@@ -1,6 +1,7 @@
 import adapter.presenter.ItemPresenter;
 import adapter.repository.ItemRepository;
 import domain.repository.IItemRepository;
+import framework.util.InputUtil;
 import framework.view.ItemView;
 import usecase.ItemUseCase;
 
@@ -16,6 +17,10 @@ public class App {
         ItemPresenter itemPresenter = new ItemPresenter();
         ItemView itemView = new ItemView(itemUseCase, itemPresenter);
 
-        itemView.show();
+        try {
+            itemView.show();
+        } catch (InputUtil.EndOfInputException ignored) {
+            return;
+        }
     }
 }

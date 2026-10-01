@@ -2,6 +2,7 @@ package adapter.presenter;
 
 import domain.entity.Transaction;
 import domain.entity.TransactionType;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class FinancePresenter {
@@ -51,7 +52,7 @@ public class FinancePresenter {
 
     private void showTransactionList(List<Transaction> transactions, String header, String emptyMessage) {
         System.out.println(header);
-        if (transactions.isEmpty()) {
+        if (transactions == null || transactions.isEmpty()) {
             System.out.println(emptyMessage);
             return;
         }
@@ -68,14 +69,22 @@ public class FinancePresenter {
         System.out.println("Berhasil menambah transaksi: " + formatTransaction(transaction));
     }
 
+    public void showBalance(BigDecimal balance, String label) {
+        System.out.println(label + ": Rp " + formatAmount(balance));
+    }
+
     public void showBalance(double balance, String label) {
-        System.out.println(label + ": Rp " + (long) balance);
+        showBalance(BigDecimal.valueOf(balance), label);
     }
 
     private String formatTransaction(Transaction transaction) {
         String type = transaction.getType() == TransactionType.PEMASUKAN ? "Pemasukan" : "Pengeluaran";
         return transaction.getId() + " | " + transaction.getDescription() + " | Rp "
-                + (long) transaction.getAmount() + " | " + type;
+                + formatAmount(transaction.getAmount()) + " | " + type;
+    }
+
+    private String formatAmount(BigDecimal amount) {
+        return amount.stripTrailingZeros().toPlainString();
     }
 
     public void showMessage(String message) {

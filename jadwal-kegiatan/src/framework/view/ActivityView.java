@@ -4,6 +4,7 @@ import adapter.presenter.ActivityPresenter;
 import domain.entity.SortOption;
 import framework.util.InputUtil;
 import usecase.ActivityUseCase;
+import java.util.OptionalInt;
 
 public class ActivityView {
     private final ActivityUseCase useCase;
@@ -139,12 +140,12 @@ public class ActivityView {
     }
 
     private Integer parseId(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        OptionalInt parsed = InputUtil.parseInteger(value);
+        if (parsed.isEmpty()) {
             presenter.showInvalidId();
             return null;
         }
+        return parsed.getAsInt();
     }
 
     private SortOption mapSortOption(String input) {

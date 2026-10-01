@@ -4,6 +4,7 @@ import adapter.presenter.ContactPresenter;
 import domain.entity.SortOption;
 import framework.util.InputUtil;
 import usecase.ContactUseCase;
+import java.util.OptionalInt;
 
 public class ContactView {
     private final ContactUseCase useCase;
@@ -127,12 +128,12 @@ public class ContactView {
     }
 
     private Integer parseId(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        OptionalInt parsed = InputUtil.parseInteger(value);
+        if (parsed.isEmpty()) {
             presenter.showInvalidId();
             return null;
         }
+        return parsed.getAsInt();
     }
 
     private SortOption mapSortOption(String input) {

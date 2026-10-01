@@ -4,6 +4,7 @@ import adapter.presenter.ItemPresenter;
 import domain.entity.SortOption;
 import framework.util.InputUtil;
 import usecase.ItemUseCase;
+import java.util.OptionalInt;
 
 public class ItemView {
     private final ItemUseCase useCase;
@@ -147,20 +148,17 @@ public class ItemView {
     }
 
     private Integer parseId(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
+        OptionalInt parsed = InputUtil.parseInteger(value);
+        if (parsed.isEmpty()) {
             presenter.showInvalidId();
             return null;
         }
+        return parsed.getAsInt();
     }
 
     private Integer parseQuantity(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return null;
-        }
+        OptionalInt parsed = InputUtil.parseInteger(value);
+        return parsed.isPresent() ? parsed.getAsInt() : null;
     }
 
     private SortOption mapSortOption(String input) {
