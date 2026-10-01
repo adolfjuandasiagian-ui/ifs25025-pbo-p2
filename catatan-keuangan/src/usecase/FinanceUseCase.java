@@ -6,6 +6,7 @@ import domain.entity.TransactionType;
 import domain.repository.ITransactionRepository;
 
 import java.util.List;
+import java.util.Locale;
 
 public class FinanceUseCase {
     private final ITransactionRepository repository;
@@ -27,9 +28,9 @@ public class FinanceUseCase {
     }
 
     public List<Transaction> searchTransactions(String query) {
-        String lowerQuery = query.toLowerCase();
+        String lowerQuery = query.toLowerCase(Locale.ROOT);
         return repository.findAll().stream()
-                .filter(transaction -> transaction.getDescription().toLowerCase().contains(lowerQuery))
+                .filter(transaction -> transaction.getDescription().toLowerCase(Locale.ROOT).contains(lowerQuery))
                 .toList();
     }
 

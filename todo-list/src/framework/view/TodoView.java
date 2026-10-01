@@ -18,16 +18,14 @@ public class TodoView {
         boolean running = true;
         while (running) {
             presenter.showTodos(useCase.getAllTodos());
-            printMenu();
+            presenter.showMenu();
             String input = InputUtil.input("Pilih");
             switch (input) {
                 case "1" -> addTodo();
-                case "2" -> markDone();
-                case "3" -> markUndone();
-                case "4" -> editTodo();
-                case "5" -> searchTodo();
-                case "6" -> sortTodo();
-                case "7" -> removeTodo();
+                case "2" -> updateTodo();
+                case "3" -> searchTodo();
+                case "4" -> sortTodo();
+                case "5" -> removeTodo();
                 case "x" -> running = false;
                 default -> presenter.showInvalidChoice();
             }
@@ -36,79 +34,50 @@ public class TodoView {
         }
     }
 
-    private void printMenu() {
-        System.out.println("Menu:");
-        System.out.println("1. Tambah Todo");
-        System.out.println("2. Tandai Selesai");
-        System.out.println("3. Tandai Belum Selesai");
-        System.out.println("4. Ubah Judul");
-        System.out.println("5. Cari");
-        System.out.println("6. Urutkan");
-        System.out.println("7. Hapus");
-        System.out.println("x. Keluar");
-    }
-
     private void addTodo() {
         System.out.println("[Tambah Todo]");
         String title = InputUtil.input("Judul (x Jika Batal)");
         if (title.equals("x"))
             return;
         if (title.isBlank()) {
-            System.out.println("[!] Judul tidak boleh kosong!");
+            presenter.showInvalidTitle();
             return;
         }
         presenter.showAddSuccess(useCase.addTodo(title));
     }
 
-    private void markDone() {
-        System.out.println("[Tandai Selesai]");
+    private void updateTodo() {
+        System.out.println("[Ubah Todo]");
         String strId = InputUtil.input("ID Todo (x Jika Batal)");
         if (strId.equals("x"))
             return;
         Integer id = parseId(strId);
         if (id == null)
             return;
-        if (useCase.markDone(id)) {
-            presenter.showMarkDoneSuccess();
-        } else {
-            presenter.showMarkFailed(id);
-        }
-    }
+        String newTitle = InputUtil.input("Judul Baru (kosongkan jika tidak diubah, x untuk batal)");
+        if (newTitle.equalsIgnoreCase("x"))
+            return;
+        String finishedInput = InputUtil.input("Selesai? (y/n, kosongkan jika tidak diubah, x untuk batal)");
+        if (finishedInput.equalsIgnoreCase("x"))
+            return;
 
-    private void markUndone() {
-        System.out.println("[Tandai Belum Selesai]");
-        String strId = InputUtil.input("ID Todo (x Jika Batal)");
-        if (strId.equals("x"))
-            return;
-        Integer id = parseId(strId);
-        if (id == null)
-            return;
-        if (useCase.markUndone(id)) {
-            presenter.showMarkUndoneSuccess();
-        } else {
-            presenter.showMarkFailed(id);
+        String title = newTitle.isBlank() ? null : newTitle;
+        Boolean done = null;
+        if (!finishedInput.isBlank()) {
+            if (finishedInput.equalsIgnoreCase("y")) {
+                done = true;
+            } else if (finishedInput.equalsIgnoreCase("n")) {
+                done = false;
+            } else {
+                presenter.showInvalidFinishedStatus();
+                return;
+            }
         }
-    }
 
-    private void editTodo() {
-        System.out.println("[Ubah Judul]");
-        String strId = InputUtil.input("ID Todo (x Jika Batal)");
-        if (strId.equals("x"))
-            return;
-        Integer id = parseId(strId);
-        if (id == null)
-            return;
-        String newTitle = InputUtil.input("Judul Baru (x Jika Batal)");
-        if (newTitle.equals("x"))
-            return;
-        if (newTitle.isBlank()) {
-            System.out.println("[!] Judul tidak boleh kosong!");
-            return;
-        }
-        if (useCase.editTitle(id, newTitle)) {
-            presenter.showEditSuccess();
+        if (useCase.updateTodo(id, title, done)) {
+            presenter.showUpdateSuccess();
         } else {
-            presenter.showEditFailed(id);
+            presenter.showUpdateFailed(id);
         }
     }
 
@@ -122,12 +91,7 @@ public class TodoView {
 
     private void sortTodo() {
         System.out.println("[Urutkan Todo]");
-        System.out.println("Pilihan Pengurutan:");
-        System.out.println("1. Judul (A-Z)");
-        System.out.println("2. Judul (Z-A)");
-        System.out.println("3. Selesai Dulu");
-        System.out.println("4. Belum Selesai Dulu");
-        System.out.println("x. Batal");
+        presenter.showSortMenu();
         String input = InputUtil.input("Pilih");
         if (input.equals("x"))
             return;

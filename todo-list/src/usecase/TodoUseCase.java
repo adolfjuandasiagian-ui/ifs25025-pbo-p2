@@ -4,6 +4,7 @@ import domain.entity.SortOption;
 import domain.entity.Todo;
 import domain.repository.ITodoRepository;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class TodoUseCase {
@@ -25,43 +26,30 @@ public class TodoUseCase {
         return repository.deleteById(id);
     }
 
-    public boolean markDone(int id) {
+    public boolean updateTodo(int id, String title, Boolean done) {
         Optional<Todo> found = repository.findById(id);
         if (found.isEmpty()) {
             return false;
         }
         Todo todo = found.get();
-        todo.markDone();
-        repository.update(todo);
-        return true;
-    }
-
-    public boolean markUndone(int id) {
-        Optional<Todo> found = repository.findById(id);
-        if (found.isEmpty()) {
-            return false;
+        if (title != null) {
+            todo.changeTitle(title);
         }
-        Todo todo = found.get();
-        todo.markUndone();
-        repository.update(todo);
-        return true;
-    }
-
-    public boolean editTitle(int id, String newTitle) {
-        Optional<Todo> found = repository.findById(id);
-        if (found.isEmpty()) {
-            return false;
+        if (done != null) {
+            if (done) {
+                todo.markDone();
+            } else {
+                todo.markUndone();
+            }
         }
-        Todo todo = found.get();
-        todo.changeTitle(newTitle);
         repository.update(todo);
         return true;
     }
 
     public List<Todo> searchTodos(String keyword) {
-        String lowerKeyword = keyword.toLowerCase();
+        String lowerKeyword = keyword.toLowerCase(Locale.ROOT);
         return repository.findAll().stream()
-                .filter(t -> t.getTitle().toLowerCase().contains(lowerKeyword))
+                .filter(t -> t.getTitle().toLowerCase(Locale.ROOT).contains(lowerKeyword))
                 .toList();
     }
 

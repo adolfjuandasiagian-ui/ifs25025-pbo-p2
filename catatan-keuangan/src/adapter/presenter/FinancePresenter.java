@@ -6,6 +6,17 @@ import java.util.List;
 
 public class FinancePresenter {
 
+    public void showMenu() {
+        System.out.println("Menu:");
+        System.out.println("1. Tambah Pemasukan");
+        System.out.println("2. Tambah Pengeluaran");
+        System.out.println("3. Cari");
+        System.out.println("4. Urutkan");
+        System.out.println("5. Lihat Saldo");
+        System.out.println("6. Hapus");
+        System.out.println("x. Keluar");
+    }
+
     public void showTransactions(List<Transaction> transactions) {
         showTransactionList(transactions, "Daftar Transaksi:", "- Belum ada transaksi!");
     }

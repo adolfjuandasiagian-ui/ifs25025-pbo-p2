@@ -4,9 +4,9 @@ import domain.entity.Todo;
 import java.util.List;
 
 public class TodoPresenter {
-    private String format(Todo t) {
-        String status = t.isDone() ? "[✓]" : "[ ]";
-        return String.format("%d | %s %s", t.getId(), status, t.getTitle());
+    private String format(Todo todo) {
+        String status = todo.isDone() ? "Selesai" : "Belum Selesai";
+        return String.format("%d | %s | %s", todo.getId(), todo.getTitle(), status);
     }
 
     private void printList(List<Todo> list, String header, String emptyMessage) {
@@ -21,7 +21,7 @@ public class TodoPresenter {
     }
 
     public void showTodos(List<Todo> list) {
-        printList(list, "Daftar Todo:", "- Belum ada todo!");
+        printList(list, "Daftar Todo:", "- Data todo belum tersedia!");
     }
 
     public void showSearchResults(List<Todo> list, String keyword) {
@@ -29,7 +29,26 @@ public class TodoPresenter {
     }
 
     public void showSortedTodos(List<Todo> list) {
-        printList(list, "Daftar Todo (Terurut):", "- Belum ada todo!");
+        printList(list, "Daftar Todo (Terurut):", "- Data todo belum tersedia!");
+    }
+
+    public void showMenu() {
+        System.out.println("Menu:");
+        System.out.println("1. Tambah Todo");
+        System.out.println("2. Ubah (judul/status selesai)");
+        System.out.println("3. Cari");
+        System.out.println("4. Urutkan");
+        System.out.println("5. Hapus");
+        System.out.println("x. Keluar");
+    }
+
+    public void showSortMenu() {
+        System.out.println("Pilihan Pengurutan:");
+        System.out.println("1. Judul (A-Z)");
+        System.out.println("2. Judul (Z-A)");
+        System.out.println("3. Selesai Dulu");
+        System.out.println("4. Belum Selesai Dulu");
+        System.out.println("x. Batal");
     }
 
     public void showAddSuccess(Todo t) {
@@ -44,24 +63,12 @@ public class TodoPresenter {
         System.out.printf("[!] Gagal menghapus todo dengan ID: %d.%n", id);
     }
 
-    public void showMarkDoneSuccess() {
-        System.out.println("Berhasil menandai todo sebagai selesai.");
+    public void showUpdateSuccess() {
+        System.out.println("Berhasil mengubah todo.");
     }
 
-    public void showMarkUndoneSuccess() {
-        System.out.println("Berhasil menandai todo sebagai belum selesai.");
-    }
-
-    public void showMarkFailed(int id) {
-        System.out.printf("[!] Todo dengan ID: %d tidak ditemukan.%n", id);
-    }
-
-    public void showEditSuccess() {
-        System.out.println("Berhasil mengubah judul todo.");
-    }
-
-    public void showEditFailed(int id) {
-        System.out.printf("[!] Todo dengan ID: %d tidak ditemukan.%n", id);
+    public void showUpdateFailed(int id) {
+        System.out.printf("[!] Gagal mengubah todo dengan ID: %d.%n", id);
     }
 
     public void showInvalidChoice() {
@@ -73,6 +80,14 @@ public class TodoPresenter {
     }
 
     public void showInvalidSortOption() {
-        System.out.println("[!] Pilihan urutan tidak valid!");
+        System.out.println("[!] Pilihan tidak valid!");
+    }
+
+    public void showInvalidTitle() {
+        System.out.println("[!] Judul tidak boleh kosong!");
+    }
+
+    public void showInvalidFinishedStatus() {
+        System.out.println("[!] Pilihan status selesai tidak valid (gunakan y/n)!");
     }
 }

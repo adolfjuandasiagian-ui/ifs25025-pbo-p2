@@ -5,7 +5,7 @@ public class Guest {
     private String name;
     private String purpose;
 
-    public Guest(Integer id, String name, String purpose) {
+    public Guest(int id, String name, String purpose) {
         this.id = id;
         this.name = name;
         this.purpose = purpose;

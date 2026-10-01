@@ -20,14 +20,7 @@ public class FinanceView {
             presenter.showTransactions(useCase.getAllTransactions());
             presenter.showBalance(useCase.getBalance(), "Saldo");
 
-            System.out.println("Menu:");
-            System.out.println("1. Tambah Pemasukan");
-            System.out.println("2. Tambah Pengeluaran");
-            System.out.println("3. Cari");
-            System.out.println("4. Urutkan");
-            System.out.println("5. Lihat Saldo");
-            System.out.println("6. Hapus");
-            System.out.println("x. Keluar");
+            presenter.showMenu();
 
             String input = InputUtil.input("Pilih");
             if (input.equalsIgnoreCase("x")) {
@@ -77,7 +70,7 @@ public class FinanceView {
 
         try {
             double amount = Double.parseDouble(amountStr);
-            if (amount <= 0) {
+            if (!Double.isFinite(amount) || amount <= 0) {
                 presenter.showError("[!] Jumlah tidak valid!");
                 return;
             }

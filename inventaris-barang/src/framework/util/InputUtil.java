@@ -10,6 +10,6 @@ public class InputUtil {
         if (!scanner.hasNextLine()) {
             System.exit(0);
         }
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 }
