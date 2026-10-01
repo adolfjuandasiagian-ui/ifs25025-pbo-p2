@@ -18,7 +18,7 @@ public class ActivityView {
         boolean running = true;
         while (running) {
             presenter.showActivities(useCase.getAllActivities());
-            printMenu();
+            presenter.showMenu();
             String input = InputUtil.input("Pilih");
             switch (input) {
                 case "1" -> addActivity();
@@ -30,41 +30,43 @@ public class ActivityView {
                 default -> presenter.showInvalidChoice();
             }
             if (running)
-                System.out.println();
+                presenter.showBlankLine();
         }
     }
 
-    private void printMenu() {
-        System.out.println("Menu:");
-        System.out.println("1. Tambah");
-        System.out.println("2. Ubah");
-        System.out.println("3. Cari");
-        System.out.println("4. Urutkan");
-        System.out.println("5. Hapus");
-        System.out.println("x. Keluar");
-    }
-
     private void addActivity() {
-        System.out.println("[Menambah Kegiatan]");
+        presenter.showPrompt("[Menambah Kegiatan]");
         String title = InputUtil.input("Judul (x Jika Batal)");
-        if (title.equals("x"))
+        if (title.equalsIgnoreCase("x"))
             return;
+        if (title.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
 
         String day = InputUtil.input("Hari (x Jika Batal)");
-        if (day.equals("x"))
+        if (day.equalsIgnoreCase("x"))
             return;
+        if (day.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
 
         String time = InputUtil.input("Waktu (x Jika Batal)");
-        if (time.equals("x"))
+        if (time.equalsIgnoreCase("x"))
             return;
+        if (time.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
 
         presenter.showAddSuccess(useCase.addActivity(title, day, time));
     }
 
     private void updateActivity() {
-        System.out.println("[Mengubah Kegiatan]");
+        presenter.showPrompt("[Mengubah Kegiatan]");
         String strId = InputUtil.input("ID Kegiatan yang diubah (x Jika Batal)");
-        if (strId.equals("x"))
+        if (strId.equalsIgnoreCase("x"))
             return;
 
         Integer id = parseId(strId);
@@ -93,23 +95,18 @@ public class ActivityView {
     }
 
     private void searchActivity() {
-        System.out.println("[Mencari Kegiatan]");
+        presenter.showPrompt("[Mencari Kegiatan]");
         String keyword = InputUtil.input("Kata Kunci (x Jika Batal)");
-        if (!keyword.equals("x")) {
+        if (!keyword.equalsIgnoreCase("x")) {
             presenter.showSearchResults(useCase.searchActivities(keyword), keyword);
         }
     }
 
     private void sortActivity() {
-        System.out.println("[Mengurutkan Kegiatan]");
-        System.out.println("Pilihan Pengurutan:");
-        System.out.println("1. Hari (Senin -> Minggu)");
-        System.out.println("2. Waktu (Awal -> Akhir)");
-        System.out.println("3. Judul (A-Z)");
-        System.out.println("4. Judul (Z-A)");
-        System.out.println("x. Batal");
+        presenter.showPrompt("[Mengurutkan Kegiatan]");
+        presenter.showSortMenu();
         String input = InputUtil.input("Pilih");
-        if (input.equals("x"))
+        if (input.equalsIgnoreCase("x"))
             return;
 
         SortOption option = mapSortOption(input);
@@ -122,9 +119,9 @@ public class ActivityView {
     }
 
     private void removeActivity() {
-        System.out.println("[Menghapus Kegiatan]");
+        presenter.showPrompt("[Menghapus Kegiatan]");
         String strId = InputUtil.input("[ID Kegiatan] yang dihapus (x Jika Batal)");
-        if (strId.equals("x"))
+        if (strId.equalsIgnoreCase("x"))
             return;
 
         Integer id = parseId(strId);

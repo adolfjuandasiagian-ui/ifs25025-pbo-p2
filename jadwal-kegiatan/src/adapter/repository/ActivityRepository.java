@@ -17,7 +17,10 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public Optional<Activity> findById(int id) {
-        return data.stream().filter(a -> a.getId() == id).findFirst();
+        return data.stream()
+            .filter(activity -> activity.getId() == id)
+            .findFirst()
+            .map(activity -> new Activity(activity.getId(), activity.getTitle(), activity.getDay(), activity.getTime()));
     }
 
     @Override

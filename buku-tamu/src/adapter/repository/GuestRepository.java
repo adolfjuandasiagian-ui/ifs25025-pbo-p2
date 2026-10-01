@@ -17,7 +17,10 @@ public class GuestRepository implements IGuestRepository {
 
     @Override
     public Optional<Guest> findById(int id) {
-        return database.stream().filter(guest -> guest.getId() == id).findFirst();
+        return database.stream()
+            .filter(guest -> guest.getId() == id)
+            .findFirst()
+            .map(guest -> new Guest(guest.getId(), guest.getName(), guest.getPurpose()));
     }
 
     @Override

@@ -31,6 +31,33 @@ public class ItemPresenter {
         printList(list, "Daftar Barang (Terurut):", "- Data barang belum tersedia!");
     }
 
+    public void showMenu() {
+        System.out.println("Menu:");
+        System.out.println("1. Tambah");
+        System.out.println("2. Ubah Stok");
+        System.out.println("3. Cari");
+        System.out.println("4. Urutkan");
+        System.out.println("5. Hapus");
+        System.out.println("x. Keluar");
+    }
+
+    public void showSortMenu() {
+        System.out.println("Pilihan Pengurutan:");
+        System.out.println("1. Nama (A-Z)");
+        System.out.println("2. Nama (Z-A)");
+        System.out.println("3. Jumlah (Terkecil -> Terbesar)");
+        System.out.println("4. Jumlah (Terbesar -> Terkecil)");
+        System.out.println("x. Batal");
+    }
+
+    public void showPrompt(String prompt) {
+        System.out.println(prompt);
+    }
+
+    public void showBlankLine() {
+        System.out.println();
+    }
+
     public void showAddSuccess(Item item) {
         System.out.printf("Berhasil menambah barang: %s%n", format(item));
     }
@@ -65,5 +92,9 @@ public class ItemPresenter {
 
     public void showInvalidQuantity() {
         System.out.println("[!] Jumlah stok tidak valid!");
+    }
+
+    public void showInvalidRequiredInput() {
+        System.out.println("[!] Input tidak boleh kosong!");
     }
 }

@@ -31,6 +31,37 @@ public class ActivityPresenter {
         printList(list, "Daftar Kegiatan (Terurut):", "- Data kegiatan belum tersedia!");
     }
 
+    public void showMenu() {
+        System.out.println("Menu:");
+        System.out.println("1. Tambah");
+        System.out.println("2. Ubah");
+        System.out.println("3. Cari");
+        System.out.println("4. Urutkan");
+        System.out.println("5. Hapus");
+        System.out.println("x. Keluar");
+    }
+
+    public void showSortMenu() {
+        System.out.println("Pilihan Pengurutan:");
+        System.out.println("1. Hari (Senin -> Minggu)");
+        System.out.println("2. Waktu (Awal -> Akhir)");
+        System.out.println("3. Judul (A-Z)");
+        System.out.println("4. Judul (Z-A)");
+        System.out.println("x. Batal");
+    }
+
+    public void showPrompt(String prompt) {
+        System.out.println(prompt);
+    }
+
+    public void showBlankLine() {
+        System.out.println();
+    }
+
+    public void showInvalidRequiredInput() {
+        System.out.println("[!] Input tidak boleh kosong!");
+    }
+
     public void showAddSuccess(Activity activity) {
         System.out.printf("Berhasil menambah kegiatan: %s%n", format(activity));
     }

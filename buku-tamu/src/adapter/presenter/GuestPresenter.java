@@ -63,6 +63,10 @@ public class GuestPresenter {
         System.out.println("[!] Pilihan tidak dimengerti.");
     }
 
+    public void showInvalidRequiredInput() {
+        System.out.println("[!] Input tidak boleh kosong!");
+    }
+
     public void showSearchResults(String keyword, List<Guest> results) {
         System.out.println("Hasil Pencarian: \"" + keyword + "\"");
         if (results == null || results.isEmpty()) {

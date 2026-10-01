@@ -18,7 +18,7 @@ public class ContactView {
         boolean running = true;
         while (running) {
             presenter.showContacts(useCase.getAllContacts());
-            printMenu();
+            presenter.showMenu();
             String input = InputUtil.input("Pilih");
             switch (input) {
                 case "1" -> addContact();
@@ -29,38 +29,40 @@ public class ContactView {
                 case "x" -> running = false;
                 default -> presenter.showInvalidChoice();
             }
-            if (running) System.out.println();
+            if (running) presenter.showBlankLine();
         }
     }
 
-    private void printMenu() {
-        System.out.println("Menu:");
-        System.out.println("1. Tambah");
-        System.out.println("2. Ubah");
-        System.out.println("3. Cari");
-        System.out.println("4. Urutkan");
-        System.out.println("5. Hapus");
-        System.out.println("x. Keluar");
-    }
-
     private void addContact() {
-        System.out.println("[Menambah Kontak]");
+        presenter.showPrompt("[Menambah Kontak]");
         String name = InputUtil.input("Nama (x Jika Batal)");
-        if (name.equals("x")) return;
+        if (name.equalsIgnoreCase("x")) return;
+        if (name.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
         
         String phone = InputUtil.input("Telepon");
-        if (phone.equals("x")) return;
+        if (phone.equalsIgnoreCase("x")) return;
+        if (phone.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
         
         String email = InputUtil.input("Email");
-        if (email.equals("x")) return;
+        if (email.equalsIgnoreCase("x")) return;
+        if (email.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
         
         presenter.showAddSuccess(useCase.addContact(name, phone, email));
     }
 
     private void updateContact() {
-        System.out.println("[Mengubah Kontak]");
+        presenter.showPrompt("[Mengubah Kontak]");
         String strId = InputUtil.input("ID Kontak yang diubah (x Jika Batal)");
-        if (strId.equals("x")) return;
+        if (strId.equalsIgnoreCase("x")) return;
         
         Integer id = parseId(strId);
         if (id == null) return;
@@ -84,21 +86,18 @@ public class ContactView {
     }
 
     private void searchContact() {
-        System.out.println("[Mencari Kontak]");
+        presenter.showPrompt("[Mencari Kontak]");
         String keyword = InputUtil.input("Kata Kunci (x Jika Batal)");
-        if (!keyword.equals("x")) {
+        if (!keyword.equalsIgnoreCase("x")) {
             presenter.showSearchResults(useCase.searchContacts(keyword), keyword);
         }
     }
 
     private void sortContact() {
-        System.out.println("[Mengurutkan Kontak]");
-        System.out.println("Pilihan Pengurutan:");
-        System.out.println("1. Nama (A-Z)");
-        System.out.println("2. Nama (Z-A)");
-        System.out.println("x. Batal");
+        presenter.showPrompt("[Mengurutkan Kontak]");
+        presenter.showSortMenu();
         String input = InputUtil.input("Pilih");
-        if (input.equals("x")) return;
+        if (input.equalsIgnoreCase("x")) return;
         
         SortOption option = mapSortOption(input);
         if (option == null) {
@@ -110,9 +109,9 @@ public class ContactView {
     }
 
     private void removeContact() {
-        System.out.println("[Menghapus Kontak]");
+        presenter.showPrompt("[Menghapus Kontak]");
         String strId = InputUtil.input("[ID Kontak] yang dihapus (x Jika Batal)");
-        if (strId.equals("x")) return;
+        if (strId.equalsIgnoreCase("x")) return;
         
         Integer id = parseId(strId);
         if (id == null) return;

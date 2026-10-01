@@ -51,6 +51,14 @@ public class TodoPresenter {
         System.out.println("x. Batal");
     }
 
+    public void showPrompt(String prompt) {
+        System.out.println(prompt);
+    }
+
+    public void showBlankLine() {
+        System.out.println();
+    }
+
     public void showAddSuccess(Todo t) {
         System.out.printf("Berhasil menambah todo: %s%n", format(t));
     }

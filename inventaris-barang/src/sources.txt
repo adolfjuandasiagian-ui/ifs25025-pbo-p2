@@ -1,9 +1,9 @@
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\App.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\adapter\presenter\ItemPresenter.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\adapter\repository\ItemRepository.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\domain\entity\Item.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\domain\entity\SortOption.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\domain\repository\IItemRepository.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\framework\util\InputUtil.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\framework\view\ItemView.java
-C:\Users\grego\OneDrive\Documents\sem 3\pbo\code\java oop\ifs25014-java-oop\inventaris-barang\src\usecase\ItemUseCase.java
+src/App.java
+src/adapter/presenter/ItemPresenter.java
+src/adapter/repository/ItemRepository.java
+src/domain/entity/Item.java
+src/domain/entity/SortOption.java
+src/domain/repository/IItemRepository.java
+src/framework/util/InputUtil.java
+src/framework/view/ItemView.java
+src/usecase/ItemUseCase.java

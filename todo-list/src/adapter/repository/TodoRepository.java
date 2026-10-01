@@ -17,7 +17,10 @@ public class TodoRepository implements ITodoRepository {
 
     @Override
     public Optional<Todo> findById(int id) {
-        return todos.stream().filter(t -> t.getId() == id).findFirst();
+        return todos.stream()
+            .filter(todo -> todo.getId() == id)
+            .findFirst()
+            .map(TodoRepository::copyOf);
     }
 
     @Override
@@ -40,5 +43,13 @@ public class TodoRepository implements ITodoRepository {
                 return;
             }
         }
+    }
+
+    private static Todo copyOf(Todo todo) {
+        Todo copy = new Todo(todo.getId(), todo.getTitle());
+        if (todo.isDone()) {
+            copy.markDone();
+        }
+        return copy;
     }
 }

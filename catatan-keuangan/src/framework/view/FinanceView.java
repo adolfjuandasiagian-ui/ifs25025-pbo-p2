@@ -51,19 +51,23 @@ public class FinanceView {
                     break;
             }
 
-            System.out.println();
+            presenter.showBlankLine();
         }
     }
 
     private void addTransaction(TransactionType type) {
         if (type == TransactionType.PEMASUKAN) {
-            System.out.println("[Tambah Pemasukan]");
+            presenter.showPrompt("[Tambah Pemasukan]");
         } else {
-            System.out.println("[Tambah Pengeluaran]");
+            presenter.showPrompt("[Tambah Pengeluaran]");
         }
 
         String desc = InputUtil.input("Keterangan (x Jika Batal)");
         if (desc.equalsIgnoreCase("x")) return;
+        if (desc.isBlank()) {
+            presenter.showInvalidRequiredInput();
+            return;
+        }
 
         String amountStr = InputUtil.input("Jumlah");
         if (amountStr.equalsIgnoreCase("x")) return;
@@ -82,19 +86,15 @@ public class FinanceView {
     }
 
     private void searchTransaction() {
-        System.out.println("[Cari Transaksi]");
+        presenter.showPrompt("[Cari Transaksi]");
         String query = InputUtil.input("Kata Kunci (x Jika Batal)");
         if (query.equalsIgnoreCase("x")) return;
         presenter.showSearchResults(query, useCase.searchTransactions(query));
     }
 
     private void sortTransactions() {
-        System.out.println("[Urutkan Transaksi]");
-        System.out.println("1. Jumlah (Terkecil)");
-        System.out.println("2. Jumlah (Terbesar)");
-        System.out.println("3. Pemasukan Dulu");
-        System.out.println("4. Pengeluaran Dulu");
-        System.out.println("x. Batal");
+        presenter.showPrompt("[Urutkan Transaksi]");
+        presenter.showSortMenu();
         String opt = InputUtil.input("Pilih");
         if (opt.equalsIgnoreCase("x")) return;
 
@@ -112,7 +112,7 @@ public class FinanceView {
     }
 
     private void deleteTransaction() {
-        System.out.println("[Hapus Transaksi]");
+        presenter.showPrompt("[Hapus Transaksi]");
         String idStr = InputUtil.input("ID Transaksi (x Jika Batal)");
         if (idStr.equalsIgnoreCase("x")) return;
 

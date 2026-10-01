@@ -29,9 +29,19 @@ public class GuestView {
                     guestPresenter.showBlankLine();
                     continue;
                 }
+                if (name.isBlank()) {
+                    guestPresenter.showInvalidRequiredInput();
+                    guestPresenter.showBlankLine();
+                    continue;
+                }
 
                 String purpose = InputUtil.input("Tujuan Kunjungan (x Jika Batal) : ");
                 if ("x".equalsIgnoreCase(purpose)) {
+                    guestPresenter.showBlankLine();
+                    continue;
+                }
+                if (purpose.isBlank()) {
+                    guestPresenter.showInvalidRequiredInput();
                     guestPresenter.showBlankLine();
                     continue;
                 }

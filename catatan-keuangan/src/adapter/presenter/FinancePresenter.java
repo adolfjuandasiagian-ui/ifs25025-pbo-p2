@@ -17,6 +17,26 @@ public class FinancePresenter {
         System.out.println("x. Keluar");
     }
 
+    public void showSortMenu() {
+        System.out.println("1. Jumlah (Terkecil)");
+        System.out.println("2. Jumlah (Terbesar)");
+        System.out.println("3. Pemasukan Dulu");
+        System.out.println("4. Pengeluaran Dulu");
+        System.out.println("x. Batal");
+    }
+
+    public void showPrompt(String prompt) {
+        System.out.println(prompt);
+    }
+
+    public void showBlankLine() {
+        System.out.println();
+    }
+
+    public void showInvalidRequiredInput() {
+        System.out.println("[!] Input tidak boleh kosong!");
+    }
+
     public void showTransactions(List<Transaction> transactions) {
         showTransactionList(transactions, "Daftar Transaksi:", "- Belum ada transaksi!");
     }

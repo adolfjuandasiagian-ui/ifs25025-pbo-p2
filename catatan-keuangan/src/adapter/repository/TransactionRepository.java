@@ -28,7 +28,8 @@ public class TransactionRepository implements ITransactionRepository {
     public Optional<Transaction> findById(int id) {
         return transactions.stream()
                 .filter(t -> t.getId() == id)
-            .findFirst();
+                .findFirst()
+                .map(transaction -> new Transaction(transaction.getId(), transaction.getDescription(), transaction.getAmount(), transaction.getType()));
     }
 
     @Override

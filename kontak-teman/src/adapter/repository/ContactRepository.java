@@ -17,7 +17,10 @@ public class ContactRepository implements IContactRepository {
 
     @Override
     public Optional<Contact> findById(int id) {
-        return data.stream().filter(c -> c.getId() == id).findFirst();
+        return data.stream()
+            .filter(contact -> contact.getId() == id)
+            .findFirst()
+            .map(contact -> new Contact(contact.getId(), contact.getName(), contact.getPhone(), contact.getEmail()));
     }
 
     @Override

@@ -30,14 +30,14 @@ public class TodoView {
                 default -> presenter.showInvalidChoice();
             }
             if (running)
-                System.out.println();
+                presenter.showBlankLine();
         }
     }
 
     private void addTodo() {
-        System.out.println("[Tambah Todo]");
+        presenter.showPrompt("[Tambah Todo]");
         String title = InputUtil.input("Judul (x Jika Batal)");
-        if (title.equals("x"))
+        if (title.equalsIgnoreCase("x"))
             return;
         if (title.isBlank()) {
             presenter.showInvalidTitle();
@@ -47,9 +47,9 @@ public class TodoView {
     }
 
     private void updateTodo() {
-        System.out.println("[Ubah Todo]");
+        presenter.showPrompt("[Ubah Todo]");
         String strId = InputUtil.input("ID Todo (x Jika Batal)");
-        if (strId.equals("x"))
+        if (strId.equalsIgnoreCase("x"))
             return;
         Integer id = parseId(strId);
         if (id == null)
@@ -82,18 +82,18 @@ public class TodoView {
     }
 
     private void searchTodo() {
-        System.out.println("[Cari Todo]");
+        presenter.showPrompt("[Cari Todo]");
         String keyword = InputUtil.input("Kata Kunci (x Jika Batal)");
-        if (!keyword.equals("x")) {
+        if (!keyword.equalsIgnoreCase("x")) {
             presenter.showSearchResults(useCase.searchTodos(keyword), keyword);
         }
     }
 
     private void sortTodo() {
-        System.out.println("[Urutkan Todo]");
+        presenter.showPrompt("[Urutkan Todo]");
         presenter.showSortMenu();
         String input = InputUtil.input("Pilih");
-        if (input.equals("x"))
+        if (input.equalsIgnoreCase("x"))
             return;
         SortOption option = mapSortOption(input);
         if (option == null) {
@@ -104,9 +104,9 @@ public class TodoView {
     }
 
     private void removeTodo() {
-        System.out.println("[Hapus Todo]");
+        presenter.showPrompt("[Hapus Todo]");
         String strId = InputUtil.input("ID Todo (x Jika Batal)");
-        if (strId.equals("x"))
+        if (strId.equalsIgnoreCase("x"))
             return;
         Integer id = parseId(strId);
         if (id == null)

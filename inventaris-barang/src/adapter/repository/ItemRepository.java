@@ -17,7 +17,10 @@ public class ItemRepository implements IItemRepository {
 
     @Override
     public Optional<Item> findById(int id) {
-        return data.stream().filter(i -> i.getId() == id).findFirst();
+        return data.stream()
+            .filter(item -> item.getId() == id)
+            .findFirst()
+            .map(item -> new Item(item.getId(), item.getName(), item.getQuantity(), item.getCategory()));
     }
 
     @Override
