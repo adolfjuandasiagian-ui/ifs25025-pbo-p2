@@ -14,8 +14,8 @@ public class FinanceUseCase {
         this.repository = repository;
     }
 
-    public void addTransaction(String description, double amount, TransactionType type) {
-        repository.save(description, amount, type);
+    public Transaction addTransaction(String description, double amount, TransactionType type) {
+        return repository.save(description, amount, type);
     }
 
     public List<Transaction> getAllTransactions() {

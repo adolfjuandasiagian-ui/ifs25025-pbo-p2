@@ -29,21 +29,22 @@ public class FinancePresenter {
         }
     }
 
-    public void showSingleTransaction(Transaction t) {
-        String typeStr = (t.getType() == TransactionType.PEMASUKAN) ? "Pemasukan" : "Pengeluaran";
-        System.out.println(t.getId() + " | " + t.getDescription() + " | Rp " + (long)t.getAmount() + " | " + typeStr);
+    public void showSingleTransaction(Transaction transaction) {
+        System.out.println(formatTransaction(transaction));
     }
 
-    public void showBalance(double balance) {
-        System.out.println("Saldo: Rp " + (long)balance);
+    public void showAddSuccess(Transaction transaction) {
+        System.out.println("Berhasil menambah transaksi: " + formatTransaction(transaction));
     }
 
-    public void showBalance(long balance) {
-        System.out.println("Saldo: Rp " + balance);
+    public void showBalance(double balance, String label) {
+        System.out.println(label + ": Rp " + (long) balance);
     }
 
-    public void showCurrentBalance(double balance) {
-        System.out.println("Saldo saat ini: Rp " + (long) balance);
+    private String formatTransaction(Transaction transaction) {
+        String type = transaction.getType() == TransactionType.PEMASUKAN ? "Pemasukan" : "Pengeluaran";
+        return transaction.getId() + " | " + transaction.getDescription() + " | Rp "
+                + (long) transaction.getAmount() + " | " + type;
     }
 
     public void showMessage(String message) {

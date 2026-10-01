@@ -27,8 +27,40 @@ public class GuestPresenter {
         System.out.println("x. Keluar");
     }
 
+    public void showRegistrationPrompt() {
+        System.out.println("[Mendaftarkan Tamu]");
+    }
+
+    public void showSearchPrompt() {
+        System.out.println("[Mencari Tamu]");
+    }
+
+    public void showDeletePrompt() {
+        System.out.println("[Menghapus Tamu]");
+    }
+
+    public void showBlankLine() {
+        System.out.println();
+    }
+
     public void showAddSuccess(Guest guest) {
         System.out.println("Berhasil mendaftarkan tamu: " + guest.getId() + " | " + guest.getName() + " | " + guest.getPurpose());
+    }
+
+    public void showDeleteResult(boolean deleted, int id) {
+        if (deleted) {
+            System.out.println("Berhasil menghapus tamu.");
+        } else {
+            System.out.println("[!] Gagal menghapus tamu dengan ID: " + id + ".");
+        }
+    }
+
+    public void showInvalidId() {
+        System.out.println("[!] ID tidak valid!");
+    }
+
+    public void showInvalidChoice() {
+        System.out.println("[!] Pilihan tidak dimengerti.");
     }
 
     public void showSearchResults(String keyword, List<Guest> results) {

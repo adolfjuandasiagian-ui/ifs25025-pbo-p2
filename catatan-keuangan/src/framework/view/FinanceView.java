@@ -18,7 +18,7 @@ public class FinanceView {
     public void show() {
         while (true) {
             presenter.showTransactions(useCase.getAllTransactions());
-            presenter.showBalance((long) useCase.getBalance());
+            presenter.showBalance(useCase.getBalance(), "Saldo");
 
             System.out.println("Menu:");
             System.out.println("1. Tambah Pemasukan");
@@ -48,7 +48,7 @@ public class FinanceView {
                     sortTransactions();
                     break;
                 case "5":
-                    presenter.showCurrentBalance(useCase.getBalance());
+                    presenter.showBalance(useCase.getBalance(), "Saldo saat ini");
                     break;
                 case "6":
                     deleteTransaction();
@@ -81,14 +81,7 @@ public class FinanceView {
                 presenter.showError("[!] Jumlah tidak valid!");
                 return;
             }
-            useCase.addTransaction(desc, amount, type);
-
-            var transactions = useCase.getAllTransactions();
-            var lastTx = transactions.get(transactions.size() - 1);
-            
-            // Hanya cetak konfirmasi berhasil tambah
-            System.out.print("Berhasil menambah transaksi: ");
-            presenter.showSingleTransaction(lastTx);
+            presenter.showAddSuccess(useCase.addTransaction(desc, amount, type));
 
         } catch (NumberFormatException e) {
             presenter.showError("[!] Jumlah tidak valid!");
